@@ -1,0 +1,267 @@
+
+/* ========== GLOBAL STYLES ========== */
+body {
+  font-family: Arial, sans-serif;
+  background: #f4f6f8;
+  margin: 0;
+  padding: 0;
+}
+
+
+/* ========== NAVIGATION BAR ========== */
+.navbar {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 0;
+  position: sticky;
+  top: 0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  z-index: 100;
+}
+
+.nav-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.nav-list li {
+  margin: 0;
+}
+
+.nav-list a {
+  display: block;
+  color: white;
+  text-decoration: none;
+  padding: 15px 25px;
+  transition: background 0.3s ease;
+  font-weight: 500;
+  text-align: center;
+}
+
+.nav-list a:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+.nav-list a.active {
+  background: rgba(255,255,255,0.3);
+  border-bottom: 3px solid white;
+}
+
+/*  CONTAINER  */
+.container {
+  max-width: 700px;
+  margin: 40px auto;
+  background: white;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+/*  HEADINGS  */
+h1 {
+  text-align: center;
+  color: #333;
+  margin-top: 0;
+}
+
+h2 {
+  color: #667eea;
+  margin-top: 25px;
+}
+
+/*  CHAT PAGE STYLES  */
+.input-group {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.input-group input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+  font-size: 14px;
+}
+
+#usernameInput {
+  width: 140px;
+}
+
+#messageInput {
+  flex: 1;
+}
+
+button {
+  background: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background: #45a049;
+}
+
+.messages {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.message {
+  background: #e8f0fe;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  border-left: 4px solid #667eea;
+}
+
+.meta {
+  font-size: 12px;
+  color: #666;
+  margin-top: 5px;
+}
+
+.timestamp {
+  font-size: 12px;
+  color: gray;
+  margin-top: 5px;
+}
+
+/*  ABOUT PAGE STYLES  */
+.content {
+  line-height: 1.8;
+  color: #555;
+}
+
+.content ul {
+  background: #f9f9f9;
+  padding: 20px 40px;
+  border-radius: 8px;
+  border-left: 4px solid #667eea;
+}
+
+.content ul li {
+  margin-bottom: 10px;
+}
+
+/* ========== CONTACT PAGE STYLES ========== */
+.contact-form {
+  margin: 30px 0;
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 8px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  margin-bottom: 8px;
+  color: #333;
+  font-weight: 500;
+}
+
+.form-group input,
+.form-group textarea {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 5px rgba(102, 126, 234, 0.2);
+}
+
+.form-group textarea {
+  resize: vertical;
+}
+
+.submit-btn {
+  background: #667eea;
+  padding: 12px 30px;
+  font-weight: 600;
+  font-size: 16px;
+  align-self: flex-start;
+}
+
+.submit-btn:hover {
+  background: #764ba2;
+}
+
+.alert {
+  padding: 15px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.alert.success {
+  background: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.contact-info {
+  margin-top: 40px;
+  padding: 20px;
+  background: #f0f4ff;
+  border-radius: 8px;
+  border-left: 4px solid #667eea;
+}
+
+.contact-info p {
+  margin: 10px 0;
+  color: #555;
+}
+
+/* ========== RESPONSIVE DESIGN ========== */
+@media (max-width: 600px) {
+  .container {
+    margin: 20px 10px;
+    padding: 15px;
+  }
+
+  .nav-list {
+    flex-direction: column;
+  }
+
+  .nav-list a {
+    padding: 12px 15px;
+    border-bottom: none;
+  }
+
+  .nav-list a.active {
+    border-bottom: none;
+    border-left: 4px solid white;
+    padding-left: 20px;
+  }
+
+  .input-group {
+    flex-direction: column;
+  }
+
+  #usernameInput {
+    width: 100%;
+  }
+
+  .contact-form {
+    padding: 15px;
+  }
+}
+/*
