@@ -87,3 +87,21 @@ postBtn.addEventListener("click", async () => {
 })();
 
 //har mer att fixa at, skall fixa att undefined inte visas om user redan finns i firebase manuellt.
+
+
+// Logga in med google genom firebase / Henrik
+
+const auth = getAuth(app);
+
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    const uid = user.uid;
+    console.log("User is signed in with UID:", uid);
+  } else {
+    console.log("No user is signed in");
+  }
+});
+
+signInWithPopup(auth, new GoogleAuthProvider());
+
+
