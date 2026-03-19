@@ -1,6 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
 import { getAuth, onAuthStateChanged, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
 import { getDatabase, ref, set, push, get } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-database.js";
+import { censorBadWords } from "./censor.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyASUiN6n-p9_B9Ruox6l3ZmW6qbQx3kRgY",
@@ -104,10 +105,14 @@ const usernameInput = document.getElementById("usernameInput");
 const messageInput = document.getElementById("messageInput");
 
 postBtn.addEventListener("click", async () => {
+  // Censurera namn och meddelande innan vi skickar
+  const censoredName = censorBadWords(usernameInput.value.trim());
+  const censoredMessage = censorBadWords(messageInput.value.trim());
+
   const userObj = {
     owner: auth.currentUser ? auth.currentUser.uid : "anonymous",
-    name: usernameInput.value.trim(),
-    message: messageInput.value.trim()
+    name: censoredName,      // censurerat namn
+    message: censoredMessage // censurerat meddelande
   }; 
 
   if (!userObj.name || !userObj.message) {
@@ -165,6 +170,9 @@ loginBtn.addEventListener("click", () => {
       console.error("Error signing in:", error);
     });
 });
+
+
+
 
 // i github.com på din fork, synca med OG repo
 // i github desktop sync så att din lokala pc pullar atta commisten
