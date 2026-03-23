@@ -113,12 +113,6 @@ const postBtn = document.getElementById("postBtn");
 const usernameInput = document.getElementById("usernameInput");
 const messageInput = document.getElementById("messageInput");
 
-// Skapa Audio-objekt med dynamisk sökväg
-const audioPath = window.location.hostname.includes("github.io")
-  ? "/gritsquare-gubbgruppen-fe25/audio/pop.mp3" // GitHub Pages path
-  : "./audio/pop.mp3"; // lokal path
-const popSound = new Audio(audioPath);
-
 postBtn.addEventListener("click", async (e) => {
   e.preventDefault();
 
@@ -143,9 +137,9 @@ postBtn.addEventListener("click", async (e) => {
     const users = await getAllUsers();
     displayAllUsers(users);
 
-    // Spela ljudet efter lyckad post
-    popSound.currentTime = 0; // starta från början
-    popSound.play();
+    // Spela upp pop-ljud
+    const audio = new Audio("../pop.mp3");
+    audio.play().catch(err => console.warn("Audio playback failed:", err));
 
     // Töm inputfält
     usernameInput.value = "";
