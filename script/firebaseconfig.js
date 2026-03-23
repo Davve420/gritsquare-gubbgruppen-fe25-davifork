@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
-import { getAuth, onAuthStateChanged, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
+import { getAuth, onAuthStateChanged, signInWithPopup, signOut, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
 import { getDatabase, ref, set, push, get } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-database.js";
 import { censorBadWords } from "./censor.js";
 import { setupDragAndDelete } from "./dragdelete.js";
@@ -109,20 +109,27 @@ export function displayAllUsers(users) {
 }
 
 
-// Event listener för knappen 
 const postBtn = document.getElementById("postBtn");
 const usernameInput = document.getElementById("usernameInput");
 const messageInput = document.getElementById("messageInput");
 
-postBtn.addEventListener("click", async () => {
-  // Censurera namn och meddelande innan vi skickar
+// Skapa Audio-objekt med dynamisk sökväg
+const audioPath = window.location.hostname.includes("github.io")
+  ? "/gritsquare-gubbgruppen-fe25/audio/pop.mp3" // GitHub Pages path
+  : "./audio/pop.mp3"; // lokal path
+const popSound = new Audio(audioPath);
+
+postBtn.addEventListener("click", async (e) => {
+  e.preventDefault();
+
+  // Censurera namn och meddelande
   const censoredName = censorBadWords(usernameInput.value.trim());
   const censoredMessage = censorBadWords(messageInput.value.trim());
 
   const userObj = {
     owner: auth.currentUser ? auth.currentUser.uid : "anonymous",
-    name: censoredName,      // censurerat namn
-    message: censoredMessage // censurerat meddelande
+    name: censoredName,
+    message: censoredMessage
   }; 
 
   if (!userObj.name || !userObj.message) {
@@ -135,6 +142,10 @@ postBtn.addEventListener("click", async () => {
   if (response) {
     const users = await getAllUsers();
     displayAllUsers(users);
+
+    // Spela ljudet efter lyckad post
+    popSound.currentTime = 0; // starta från början
+    popSound.play();
 
     // Töm inputfält
     usernameInput.value = "";
@@ -157,28 +168,42 @@ postBtn.addEventListener("click", async () => {
 // Logga in med google genom firebase / Henrik
 
 
+const loginBtn = document.getElementById("loginBtn");
+const logoutBtn = document.getElementById("logoutBtn");
+const logoutItem = document.getElementById("logoutItem");
+
 onAuthStateChanged(auth, (user) => {
   if (user) {
-    const uid = user.uid;
-    console.log("User is signed in with UID:", uid);
+    loginBtn.textContent = `Signed in as ${user.displayName || user.email}`;
+    loginBtn.disabled = true;
+    logoutItem.style.display = "";
+    usernameInput.value = user.displayName || user.email;
+    usernameInput.closest(".col-12.col-md-3").style.display = "none";
   } else {
-    console.log("No user is signed in");
+    loginBtn.textContent = "Sign in with Google";
+    loginBtn.disabled = false;
+    logoutItem.style.display = "none";
+    usernameInput.value = "";
+    usernameInput.closest(".col-12.col-md-3").style.display = "";
   }
 });
 
-signInWithPopup(auth, new GoogleAuthProvider());
+logoutBtn.addEventListener("click", () => {
+  signOut(auth).catch((error) => console.error("Sign-out error:", error));
+});
 
-
-// Event listener för login-knappen, den finns inte ännu i HTML
-const loginBtn = document.getElementById("loginBtn");
 loginBtn.addEventListener("click", () => {
   signInWithPopup(auth, new GoogleAuthProvider())
     .then((result) => {
-      const user = result.user;
-      console.log("User signed in:", user);
+      console.log("User signed in:", result.user);
     })
     .catch((error) => {
       console.error("Error signing in:", error);
+      if (error.code === "auth/unauthorized-domain") {
+        alert("Sign-in failed: this domain is not authorized in Firebase.\nOpen the app via a local server (e.g. Live Server) instead of opening the file directly.");
+      } else {
+        alert(`Sign-in failed: ${error.message}`);
+      }
     });
 });
 
