@@ -106,7 +106,7 @@ export function displayAllUsers(users) {
 
     if (user.createdAt) {
       const date = new Date(user.createdAt);
-      timeText = date.toLocaleDateString("sv-SE");
+      timeText = date.toLocaleString("sv-SE");
     }
 
     div.innerHTML = `
