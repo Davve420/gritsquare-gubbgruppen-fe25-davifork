@@ -1,3 +1,5 @@
+https://dunderblixt.github.io/gritsquare-gubbgruppen-fe25/
+
 2026-03-17 Project Gubbchat conceptualized 
 Team Gubbchat:  
 
@@ -22,3 +24,4 @@ Timestamps tested, not yet implemented.
 
 2026-03-24
 Sort by time/user feature added.
+Timestamp hidden unless hovered added by Eddie
